@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Logs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datetime</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for log in logs %}
+            <tr>
+                <td><a href="{{ path('log_show', { 'id': log.id }) }}">{{ log.id }}</a></td>
+                <td>{{ log.datetime }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('log_show', { 'id': log.id }) }}">show</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
