@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Devices list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Apikey</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for device in devices %}
+            <tr>
+                <td><a href="{{ path('device_show', { 'id': device.id }) }}">{{ device.id }}</a></td>
+                <td>{{ device.name }}</td>
+                <td>{{ device.apikey }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('device_show', { 'id': device.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('device_edit', { 'id': device.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('device_new') }}">Create a new device</a>
+        </li>
+    </ul>
+{% endblock %}

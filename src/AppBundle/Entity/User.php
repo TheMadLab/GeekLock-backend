@@ -205,5 +205,45 @@ class User implements \JsonSerializable
             'key' => $this->getAccessKey()
         ];
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add log
+     *
+     * @param \AppBundle\Entity\Log $log
+     *
+     * @return User
+     */
+    public function addLog(\AppBundle\Entity\Log $log)
+    {
+        $this->logs[] = $log;
+
+        return $this;
+    }
+
+    /**
+     * Remove log
+     *
+     * @param \AppBundle\Entity\Log $log
+     */
+    public function removeLog(\AppBundle\Entity\Log $log)
+    {
+        $this->logs->removeElement($log);
+    }
+
+    /**
+     * Get logs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLogs()
+    {
+        return $this->logs;
+    }
+}

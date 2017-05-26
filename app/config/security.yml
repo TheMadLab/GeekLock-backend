@@ -2,7 +2,17 @@
 # http://symfony.com/doc/current/security.html
 
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_DEVICE: ROLE_DEVICE
+
     providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, api_device]
         in_memory:
             memory:
                 users:
@@ -12,15 +22,27 @@ security:
                     admin:
                         password: pass123
                         roles: 'ROLE_ADMIN'
+        api_device:
+            entity:
+                class: AppBundle:Device
+                property: apikey
 
-    encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        api_area_device:
+            pattern: ^/api/
+            provider: api_device
+            user_checker: app.security.device.checker
+            guard:
+                authenticator: app.security.token_authenticator
+            stateless: true
+            anonymous: false
 
         main:
             anonymous: ~
@@ -35,4 +57,5 @@ security:
 
 
     access_control:
+        - { path: ^/api, roles: ROLE_DEVICE }
         - { path: ^/, roles: ROLE_ADMIN }

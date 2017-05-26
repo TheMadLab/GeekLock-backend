@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Mcfedr\JsonFormBundle\Controller\JsonController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
-class ApiController extends Controller
+class ApiController extends JsonController
 {
     /**
      * @Route("/api/status", name="api_status")
