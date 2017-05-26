@@ -152,7 +152,7 @@ class User implements \JsonSerializable
      */
     public function setMac($mac)
     {
-        $this->mac = $mac;
+        $this->mac = strtoupper($mac);
 
         return $this;
     }

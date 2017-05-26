@@ -2,7 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Mcfedr\JsonFormBundle\Controller\JsonController;
+use AppBundle\Entity\DTO\AccessDto;
+use AppBundle\Entity\DTO\AccessesDto;
+use AppBundle\Entity\DTO\QueueDto;
+use AppBundle\Entity\Log;
+use AppBundle\Form\AccessesType;
+use AppBundle\Form\QueueType;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,14 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
-class ApiController extends JsonController
+class ApiController extends CustomJsonController
 {
     /**
      * @Route("/api/status", name="api_status")
      */
     public function statusAction(Request $request)
     {
-        // replace this example code with whatever you need
         return new JsonResponse([
             "timestamp" => time(),
             "db_update" => 312564659,
@@ -48,15 +53,26 @@ class ApiController extends JsonController
      */
     public function accessAction(Request $request)
     {
-        
-        $offset = $request->query->get('offset', 0);
-        $perPage = 10;
-        $users = $this->getDoctrine()->getRepository('AppBundle:User')->paginate($offset, $perPage, $total);
+        $accesses = new QueueDto();
+        $form = $this->createForm(QueueType::class, $accesses);
+        $this->handleJsonForm($form, $request);
+
+        /** @var AccessDto $access */
+        foreach ($accesses->getQueue() as $access) {
+            $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['accessKey' => $access->getKey()]);
+            if ($user) {
+                $user->setMac($access->getMac());
+                $log = new Log();
+                $log
+                    ->setUser($user)
+                    ->setDatetime($access->getTimestamp());
+                $this->getDoctrine()->getManager()->persist($log);
+            }
+        }
+        $this->getDoctrine()->getManager()->flush();
+
         return new JsonResponse([
-            'users' => $users,
-            'offset' => $offset,
-            'total' => $total,
-            'length' => $perPage
+            'accesses' => $accesses
         ]);
     }
 
