@@ -3,26 +3,20 @@
 {% block body %}
     <h1>Logs list</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Datetime</th>
-                <th>Actions</th>
+                <th>User</th>
             </tr>
         </thead>
         <tbody>
         {% for log in logs %}
             <tr>
-                <td><a href="{{ path('log_show', { 'id': log.id }) }}">{{ log.id }}</a></td>
-                <td>{{ log.datetime }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('log_show', { 'id': log.id }) }}">show</a>
-                        </li>
-                    </ul>
-                </td>
+                <td>{{ log.id }}</td>
+                <td>{{ log.datetime|date }}</td>
+                <td><a href="{{ path('user_show', {id: log.user.id}) }}">{{ log.user.name }}</a></td>
             </tr>
         {% endfor %}
         </tbody>

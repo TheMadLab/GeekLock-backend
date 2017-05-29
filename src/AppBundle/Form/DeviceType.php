@@ -13,7 +13,7 @@ class DeviceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('apikey');
+        $builder->add('name')->add('apikey')->add('suspended');
     }
     
     /**

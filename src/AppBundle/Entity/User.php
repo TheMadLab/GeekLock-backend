@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -25,6 +26,7 @@ class User implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -32,6 +34,7 @@ class User implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @Assert\NotNull()
      */
     private $email;
 
@@ -53,11 +56,13 @@ class User implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="accessKey", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $accessKey;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Log", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"datetime" = "DESC"})
      */
     protected $logs;
 
@@ -211,6 +216,7 @@ class User implements \JsonSerializable
     public function __construct()
     {
         $this->logs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->accessKey = substr(md5(time() . rand(0,9999) . substr(str_shuffle(md5(microtime())), 0, 10) . ' Gary Du' . substr(str_shuffle(MD5(microtime())), 0, 10)), 0, 12);
     }
 
     /**

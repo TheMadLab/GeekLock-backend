@@ -49,28 +49,12 @@ class DeviceController extends Controller
             $em->persist($device);
             $em->flush();
 
-            return $this->redirectToRoute('device_show', array('id' => $device->getId()));
+            return $this->redirectToRoute('device_index');
         }
 
         return $this->render('device/new.html.twig', array(
             'device' => $device,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a device entity.
-     *
-     * @Route("/{id}", name="device_show")
-     * @Method("GET")
-     */
-    public function showAction(Device $device)
-    {
-        $deleteForm = $this->createDeleteForm($device);
-
-        return $this->render('device/show.html.twig', array(
-            'device' => $device,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -89,7 +73,7 @@ class DeviceController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('device_edit', array('id' => $device->getId()));
+            return $this->redirectToRoute('device_index');
         }
 
         return $this->render('device/edit.html.twig', array(

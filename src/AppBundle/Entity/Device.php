@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Device
@@ -28,6 +29,7 @@ class Device implements UserInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -35,6 +37,7 @@ class Device implements UserInterface
      * @var string
      *
      * @ORM\Column(name="apikey", type="string", length=32, unique=true)
+     * @Assert\NotNull()
      */
     private $apikey;
 

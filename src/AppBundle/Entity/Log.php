@@ -23,7 +23,6 @@ class Log
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="datetime", type="datetimetz")
      */
     private $datetime;

@@ -1,9 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>User</h1>
+    <div class="row">
+        <div class="col-sm-3">
+            <a href="{{ path('user_index') }}" class="btn btn-info">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                Back to the list
+            </a>
+        </div>
+        <div class="col-sm-6">
+            <h1 class="text-center">User</h1>
+        </div>
+        <div class="col-sm-3">
+            {{ form_start(delete_form) }}
+            <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                <a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-warning">Edit</a>
+                <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('R u sure?')">
+            </div>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
 
-    <table>
+    <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -26,23 +44,25 @@
                 <td>{{ user.mac }}</td>
             </tr>
             <tr>
-                <th>Accesskey</th>
+                <th>Access Key</th>
                 <td>{{ user.accessKey }}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('user_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('user_edit', { 'id': user.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <h2>Accesses</h2>
+    {% if user.logs.count %}
+        <ul>
+            {% for log in user.logs %}
+                <li>{{ log.datetime|date }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Not accessed yet</p>
+    {% endif %}
+
+
+
+
+
 {% endblock %}

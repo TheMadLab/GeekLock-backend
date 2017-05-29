@@ -24,7 +24,7 @@ class LogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $logs = $em->getRepository('AppBundle:Log')->findAll();
+        $logs = $em->getRepository('AppBundle:Log')->getOrdered();
 
         return $this->render('log/index.html.twig', array(
             'logs' => $logs,

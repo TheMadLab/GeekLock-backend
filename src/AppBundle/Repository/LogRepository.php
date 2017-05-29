@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class LogRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOrdered()
+    {
+        return $this
+            ->createQueryBuilder('l')
+            ->orderBy('l.datetime', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

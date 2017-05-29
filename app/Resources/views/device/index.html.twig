@@ -3,39 +3,37 @@
 {% block body %}
     <h1>Devices list</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Apikey</th>
+                <th>Suspended</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for device in devices %}
             <tr>
-                <td><a href="{{ path('device_show', { 'id': device.id }) }}">{{ device.id }}</a></td>
+                <td>{{ device.id }}</td>
                 <td>{{ device.name }}</td>
                 <td>{{ device.apikey }}</td>
+                <td>{% if device.suspended %}Yes{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('device_show', { 'id': device.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('device_edit', { 'id': device.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="btn btn-warning" href="{{ path('device_edit', { 'id': device.id }) }}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        Edit
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('device_new') }}">Create a new device</a>
-        </li>
-    </ul>
+    <a class="btn btn-success" href="{{ path('device_new') }}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Create a new device
+    </a>
+
 {% endblock %}
