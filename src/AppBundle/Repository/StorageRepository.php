@@ -37,6 +37,7 @@ class StorageRepository extends \Doctrine\ORM\EntityRepository
             $record = new Storage($name, $value);
             $this->getEntityManager()->persist($record);
         }
+        $record->setName($name);
         $record->setValue($value);
         $this->getEntityManager()->flush();
         return $value;
