@@ -16,6 +16,7 @@ class StorageRepository extends \Doctrine\ORM\EntityRepository
         $record = $this
             ->createQueryBuilder('s')
             ->andWhere('s.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
         if (!$record) {
@@ -29,6 +30,7 @@ class StorageRepository extends \Doctrine\ORM\EntityRepository
         $record = $this
             ->createQueryBuilder('s')
             ->andWhere('s.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
         if (!$record) {
