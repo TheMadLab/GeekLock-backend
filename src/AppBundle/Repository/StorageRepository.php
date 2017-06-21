@@ -20,9 +20,9 @@ class StorageRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
         if (!$record) {
-            return new Storage($name, $default);
+            return $default;
         }
-        return $record;
+        return $record->getValue();
     }
 
     public function setValue($name = '', $value = '')
@@ -39,6 +39,6 @@ class StorageRepository extends \Doctrine\ORM\EntityRepository
         }
         $record->setValue($value);
         $this->getEntityManager()->flush();
-        return $record;
+        return $value;
     }
 }
