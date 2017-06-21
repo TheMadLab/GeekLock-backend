@@ -6,6 +6,7 @@ use AppBundle\Entity\DTO\AccessDto;
 use AppBundle\Entity\DTO\AccessesDto;
 use AppBundle\Entity\DTO\QueueDto;
 use AppBundle\Entity\Log;
+use AppBundle\Entity\Storage;
 use AppBundle\Form\AccessesType;
 use AppBundle\Form\QueueType;
 use Doctrine\ORM\EntityManager;
@@ -25,7 +26,7 @@ class ApiController extends CustomJsonController
     {
         return new JsonResponse([
             "timestamp" => time(),
-            "db_update" => 312564659,
+            "db_update" => $this->getDoctrine()->getRepository('AppBundle:Storage')->getValue(Storage::DB_UPDATE, 1),
             "open" => 312594656,
             "lock" => true
         ]);

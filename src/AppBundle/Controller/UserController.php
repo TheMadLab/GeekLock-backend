@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Storage;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -47,7 +48,8 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
+            $this->getDoctrine()->getRepository('AppBundle:Storage')->setValue(Storage::DB_UPDATE, time());
+            
             return $this->redirectToRoute('user_index');
         }
 
@@ -87,7 +89,7 @@ class UserController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->getDoctrine()->getRepository('AppBundle:Storage')->setValue(Storage::DB_UPDATE, time());
             return $this->redirectToRoute('user_index');
         }
 
@@ -113,6 +115,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
+            $this->getDoctrine()->getRepository('AppBundle:Storage')->setValue(Storage::DB_UPDATE, time());
         }
 
         return $this->redirectToRoute('user_index');
