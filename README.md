@@ -13,3 +13,5 @@ http://localhost:8080/app_dev.php
 
     heroku ps:scale web=1
     heroku config:set SYMFONY_ENV=prod
+    heroku logs --tail
+    heroku run bash
