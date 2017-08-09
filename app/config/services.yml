@@ -8,3 +8,4 @@ services:
 
     app.security.device.checker:
         class: AppBundle\Security\DeviceUserChecker
+        arguments: ['@doctrine']

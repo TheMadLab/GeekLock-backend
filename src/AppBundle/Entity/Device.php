@@ -46,6 +46,12 @@ class Device implements UserInterface
      * @ORM\Column(name="suspended", type="boolean", nullable=true)
      */
     private $suspended = false;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="lastLogin", type="datetimetz", nullable=true)
+     */
+    private $lastLogin;
     
     /**
      * Device constructor.
@@ -162,4 +168,25 @@ class Device implements UserInterface
     {
         return $this->suspended;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param \DateTime $lastLogin
+     * @return Device
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+    
+   
 }

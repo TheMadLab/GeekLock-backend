@@ -9,6 +9,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Apikey</th>
+                <th>Last Login</th>
                 <th>Suspended</th>
                 <th>Actions</th>
             </tr>
@@ -19,6 +20,7 @@
                 <td>{{ device.id }}</td>
                 <td>{{ device.name }}</td>
                 <td>{{ device.apikey }}</td>
+                <td>{% if device.lastLogin %}{{ device.lastLogin|date }}{% endif %}</td>
                 <td>{% if device.suspended %}Yes{% endif %}</td>
                 <td>
                     <a class="btn btn-warning" href="{{ path('device_edit', { 'id': device.id }) }}">
